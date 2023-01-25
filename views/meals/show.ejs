@@ -1,0 +1,133 @@
+<%- include('../partials/header') %>
+<nav>
+    <a href="/">Home</a>
+</nav>
+
+    <div class="text-center">
+        <h1>Meal Details for <%= (meal.date.getMonth() + 1) + '/' + (meal.date.getDate() + 1) + '/' +
+                meal.date.getFullYear() %>
+        </h1>
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th style="width:10%">Breakfast:</th>
+                <td>
+                    <%= meal.breakfast %>
+                </td>
+                <td>
+                    <%= typeof(meal.breakfastCals)==="number" ? meal.breakfastCals : "0" %> Calories
+                </td>
+            </tr>
+            <tr>
+                <th>Lunch:</th>
+                <td>
+                    <%= meal.lunch %>
+                </td>
+                <td>
+                    <%= typeof(meal.lunchCals)==="number" ? meal.lunchCals : "0" %> Calories
+                </td>
+            </tr>
+            <tr>
+                <th>Dinner:</th>
+                <td>
+                    <%= meal.dinner %>
+                </td>
+                <td>
+                    <%= typeof(meal.dinnerCals)==="number" ? meal.dinnerCals : "0" %> Calories
+                </td>
+            </tr>
+            <tr>
+                <th>Snack(s):</th>
+                <td>
+                    <%= meal.snacks %>
+                </td>
+                <td>
+                    <%= typeof(meal.snackCals)==="number" ? meal.snackCals : "0" %> Calories
+                </td>
+            </tr>
+        </table>
+        <a href="/meals/<%= meal._id %>/edit"><button class="btn btn-success">Add/Edit Meals</button></a><br><br>
+        <form action="/meals/<%= meal._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-danger" type="submit">DELETE ENTRY</button>
+        </form><br><br>
+    </div>
+
+
+
+    <% let totalCalories=meal.breakfastCals + meal.lunchCals + meal.dinnerCals + meal.snackCals %>
+
+        <% if (totalCalories> 0) { %>
+            <div class="card chart-container">
+                <canvas id="chart1"></canvas>
+                <div class="text-center">
+                    <p>
+                        <%= totalCalories %> Calories
+                    </p>
+                </div>
+            </div><br><br>
+            <% } else { %>
+                <h1 class="text-center blink">No Calories Have Been Entered</h1><br><br>
+                <% } %>
+
+
+                    <div class="text-center">
+                        <form action="/meals/<%= meal._id %>/notes" method="POST">
+                            <textarea name="content" placeholder="Notes" cols="45" rows="3" w></textarea><br>
+                            <input type="submit" class="btn btn-primary" value="Add Note">
+                        </form><br><br>
+
+
+                        <% if (meal.notes.length) { %>
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" style="width:15%">Date</th>
+                                        <th class="text-center">Notes</th>
+                                        <th class="text-center" style="width:6%">Delete?</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% meal.forEach(function(m) { %>
+                                        <tr>
+                                            <td class="text-center">
+                                                <%= m.createdAt.toDateString() %>
+                                            </td>
+                                            <td class="text-center">
+                                                <%= m.content %>
+                                            </td>
+                                            <td>
+                                                <form class="text-center" action="/notes/<%= n._id %>?_method=DELETE"
+                                                    method="POST">
+                                                    <button type="submit" class="btn btn-danger">X</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <% }); %>
+                                </tbody>
+                            </table>
+                            <% } else { %>
+                                <h5>No Notes Yet</h5>
+                                <% } %>
+                    </div>
+
+
+
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+                    <script>
+                        const ctx1 = document.getElementById("chart1").getContext('2d');
+                        const myChart1 = new Chart(ctx1, {
+                            type: 'pie',
+                            data: {
+                                labels: ["Breakfast Calories", "Lunch Calories", "Dinner Calories", "Snack Calories"],
+                                datasets: [{
+                                    label: 'Food Items',
+                                    backgroundColor: ["#0074D9", "#FF4136", "#2ECC40", "#FF851B"],
+                                    
+                                }]
+                            },
+                        
+                       }); 
+                
+                    </script>
+
+
+                    <%- include('../partials/footer') %>

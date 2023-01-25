@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <title><%= title %></title>
+</head>
+<body>
+  <nav class="navbar sticky-top navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Home Page</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+    <% if (user) { %>
+      <a class="navbar-brand" href="/meals">All Meals</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+      <a class="navbar-brand" href="/meals/new">Add Meal</a>
+      <a class="navbar-brand" href="/logout">Log Out</a>
+      <% } else { %>
+        <a href="/auth/google" class="login">Sign In&nbsp;<img src="https://i.imgur.com/FHjYyi0.png"></a>
+        <% } %>
+  </nav><br><br>
