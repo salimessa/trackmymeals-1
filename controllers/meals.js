@@ -12,53 +12,52 @@ module.exports = {
   };
 
 function index(req, res) {
+    console.log(req.user)
     Meal.find({}, function(err, meals){
-        console.log(meals)
+       
         res.render('meals/index', {title:"All Meals", meals })
     }).sort("Date")
 }
 
 function show(req, res){
     Meal.findById(req.params.id, function(err, meal){
-        res.render('meals/show', {meal})
+        res.render('meals/show', {title:"Details", meal})
     })
 }
 
 function newMeal(req, res){
-    res.render('meals/new')
+    res.render('meals/new',  {title:"Add New Meals"})
 }
 
 function create(req, res) {
+    console.log(req.body)
     const meal = new Meal(req.body)
    // Meal.findOne({user: req.user._id, date: req.body.date}, function(err, meal){
-        if(meal) return res.redirect('/meals/new')
        // meal = new Meal(req.body)
        // meal.user = req.user._id
-        meal.save(function(err){
-            if (err) return res.redirect('/meals/new')
-            res.redirect('/meals')
+       meal.save(function(err){
+           if (err) return res.redirect('/meals/new')
+           res.redirect('/meals')
         })
-   // })
+        // })
 }
 
 function edit(req, res){
     Meal.findById(req.params, function(err, meal){
-        if(err){ return next(err)}
+        if(err) return
             res.render('meals/edit', { meal })
         })
     }
     
 
-function update(req, res, next){
-    const updatedMeal = {
-        meal: req.body.meal
+    function update(req, res) {
+        Meal.findByIdAndUpdate(req.params.id, req.body, function (err, meal) {
+            if (err) {
+                res.render("meals/edit", { meal });
+            }
+            res.redirect(`/meals/${meal._id}`);
+        });
     }
-    Meal.findByIdAndUpdate(req.params.id, updatedMeal, {new: true}, function(err, Meal){
-            if(err){return next(err)}
-            res.redirect(`/meals/${meal._id}`)
-        })
-
-}
 
 
 function deleteMeal(req, res){

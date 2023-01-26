@@ -20,8 +20,7 @@
                             <% meals.forEach(function(m) { %>
                                 <tr>
                                     <td>
-                                        <%= (m.date.getMonth() + 1) + '/' + (m.date.getDate() + 1) + '/' +
-                                            m.date.getFullYear() %>
+                                       
                                     </td>
                                     <td>
                                         <%= m.breakfast %>
@@ -46,7 +45,7 @@
                 <h2>Daily Calorie Intake</h2>
                 <% meals.forEach(function(d) { %>
                     <button class="accordion">
-                        <%= (d.date.getMonth() + 1) + '/' + (d.date.getDate() + 1) + '/' + d.date.getFullYear() %>
+                      
                     </button>
                     <div class="panel">
                         <table>

@@ -48,6 +48,10 @@ const mealSchema = new Schema({
         type: Number,
         default: 0
     },
+    date: {
+        type: Date
+    },
+
     notes: [notesSchema]
 });
 

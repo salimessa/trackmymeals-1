@@ -2,6 +2,16 @@
 <nav>
     <a href="/">Home</a>
 </nav>
+<section id="show-page">
+    <div>Breakfast:</div>
+    <div><%= meal.breakfast %> </div>
+    <div>Lunch:</div>
+    <div><%= meal.lunch %> </div>
+    <div>Dinner:</div>
+    <div><%= meal.dinner %></div>
+    <div>Snacks:</div>
+    <div><%= meal.snacks %></div>
+</section>
 
     <div class="text-center">
         <h1>Meal Details for <%= (meal.date.getMonth() + 1) + '/' + (meal.date.getDate() + 1) + '/' +
