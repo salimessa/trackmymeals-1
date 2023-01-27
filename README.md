@@ -1,7 +1,7 @@
 TRACK MY MEALS
 
 
-Will allow useres track the food(s) that they will be having through out the day along with the amount of calories were consumed.
+Will allow useres to track the food(s) that they will be having through out the day along with the amount of calories that were consumed.
 
 
 
